@@ -3,12 +3,15 @@ package sample;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import sample.socket.Connector;
 
 import java.io.ObjectOutputStream;
@@ -98,7 +101,30 @@ public class RoleController {
 
             if(Prevalent.getRole().equals("Admin"))
             {
-
+                if(value == 1)
+                {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/admin/create.fxml"));
+                    Stage stage = (Stage) select_choice.getScene().getWindow();
+                    stage.setTitle("Create a New User");
+                    Scene scene = new Scene(loader.load(), 1114, 627);
+                    stage.setScene(scene);
+                }
+                else if(value == 2)
+                {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/admin/update.fxml"));
+                    Stage stage = (Stage) select_choice.getScene().getWindow();
+                    stage.setTitle("Update User Info");
+                    Scene scene = new Scene(loader.load(), 1114, 627);
+                    stage.setScene(scene);
+                }
+                else if(value == 3)
+                {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/admin/delete.fxml"));
+                    Stage stage = (Stage) select_choice.getScene().getWindow();
+                    stage.setTitle("Delete an User");
+                    Scene scene = new Scene(loader.load(), 1114, 627);
+                    stage.setScene(scene);
+                }
             }
             else if(Prevalent.getRole().equals("Viewer"))
             {
@@ -122,6 +148,4 @@ public class RoleController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-
 }
