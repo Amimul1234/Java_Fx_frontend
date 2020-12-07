@@ -1,6 +1,11 @@
 package sharedClasses;
 
-public class User {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class User implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 6529685098267757690L;
      private String name;
      private byte[] image;
      private String role;

@@ -13,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import sample.socket.Connector;
-
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
