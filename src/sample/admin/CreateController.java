@@ -63,7 +63,7 @@ public class CreateController {
 
             User user = new User();
             user.setName(user_name);
-            user_password.setText(user_password.getText());
+            user.setPassword(user_password.getText());
             user.setRole(role_drop_down.getValue());
 
             try {

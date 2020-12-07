@@ -44,11 +44,6 @@ public class Controller {
             return;
         }
 
-        else if(pass.isEmpty())
-        {
-            showAlert(Alert.AlertType.ERROR,"Form error!", "Please enter password");
-            return;
-        }
         else
         {
             credential.add(user_name);

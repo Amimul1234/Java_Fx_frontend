@@ -9,10 +9,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import sample.socket.Connector;
+
+import java.io.File;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +47,12 @@ public class RoleController {
         user_name.setText(Prevalent.getUser_name());
         name_of_the_user.setText(Prevalent.getUser_name());
         role_of_the_user.setText(Prevalent.getRole());
+
+        if(!Prevalent.getImage_url().isEmpty())
+        {
+            File file = new File(Prevalent.getImage_url());
+            user_profile_pic.setImage(new Image(file.toURI().toString()));
+        }
 
         for(int i=0; i<Prevalent.getOptions().size(); i++)
         {
