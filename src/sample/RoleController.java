@@ -14,8 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import sample.socket.Connector;
-
-import java.io.File;
+import java.io.ByteArrayInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,20 +43,16 @@ public class RoleController {
 
     @FXML
     public void initialize() {
-        user_name.setText(Prevalent.getUser_name());
-        name_of_the_user.setText(Prevalent.getUser_name());
+        user_name.setText(Prevalent.getName());
+        name_of_the_user.setText(Prevalent.getName());
         role_of_the_user.setText(Prevalent.getRole());
 
-        if(!Prevalent.getImage_url().isEmpty())
+        if(Prevalent.getImage().length != 0)
         {
-            File file = new File(Prevalent.getImage_url());
-            user_profile_pic.setImage(new Image(file.toURI().toString()));
+            user_profile_pic.setImage(new Image(new ByteArrayInputStream(Prevalent.getImage())));
         }
 
-        for(int i=0; i<Prevalent.getOptions().size(); i++)
-        {
-            avilable_options.getItems().add(String.valueOf(i+1)+". "+Prevalent.getOptions().get(i));
-        }
+        avilable_options.getItems().addAll(Prevalent.getActions());
     }
 
     @FXML
@@ -66,17 +61,18 @@ public class RoleController {
 
         if(option.isEmpty())
         {
-            showAlert(Alert.AlertType.ERROR, "Field error", "Please enter your choice");
+            showAlert(Alert.AlertType.ERROR, "Input error!", "Please enter your choice");
             return;
         }
         try
         {
             int value = Integer.parseInt(option_input.getText());
 
-            if(value > Prevalent.getOptions().size())
+            if(value > Prevalent.getActions().size())
             {
                 showAlert(Alert.AlertType.ERROR, "Input Error !", "Please enter correct option");
             }
+
             else
             {
                 Platform.runLater(new Runnable() {
@@ -97,9 +93,8 @@ public class RoleController {
         try
         {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(Connector.getInstance().getSocket().getOutputStream());
-            List<String> clientResponse = new ArrayList<>();
-            clientResponse.add(option_input.getText());
-            objectOutputStream.writeObject(clientResponse);
+            String admin_req_from_client = option_input.getText();
+            objectOutputStream.writeObject(admin_req_from_client);
             objectOutputStream.flush();
 
             //This block was for all user option selector

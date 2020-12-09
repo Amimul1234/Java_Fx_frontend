@@ -15,9 +15,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import sample.socket.Connector;
 import sharedClasses.User;
-
 import java.io.*;
-import java.util.Arrays;
 
 public class CreateController {
 
@@ -107,8 +105,7 @@ public class CreateController {
                 //Image Retrieval code
                 /*
                 System.out.println(Arrays.toString(user.getImage()));
-                FileOutputStream fileOutputStream = new FileOutputStream("G://abcd.jpg");
-                fileOutputStream.write(user.getImage(), 0, user.getImage().length);
+
                 */
 
 
@@ -122,6 +119,7 @@ public class CreateController {
 
     @FXML
     void open_file_chooser(MouseEvent event) {
+
         FileChooser.ExtensionFilter imageFilter
                 = new FileChooser.ExtensionFilter("Image Files", "*.jpg"); //getting only images
 
@@ -150,6 +148,4 @@ public class CreateController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-
 }

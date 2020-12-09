@@ -1,28 +1,31 @@
 package sample;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Prevalent {
-    private static String user_name;
-    private static String image_url;
+public class Prevalent{
+    private static String name;
+    private static byte[] image;
     private static String role;
-    private static List<String> options = new ArrayList<>();
+    private static String password;
+    private static List<String> actions;
 
-    public static String getUser_name() {
-        return user_name;
+    public Prevalent() {
     }
 
-    public static void setUser_name(String user_name) {
-        Prevalent.user_name = user_name;
+    public static String getName() {
+        return name;
     }
 
-    public static String getImage_url() {
-        return image_url;
+    public static void setName(String name) {
+        Prevalent.name = name;
     }
 
-    public static void setImage_url(String image_url) {
-        Prevalent.image_url = image_url;
+    public static byte[] getImage() {
+        return image;
+    }
+
+    public static void setImage(byte[] image) {
+        Prevalent.image = image;
     }
 
     public static String getRole() {
@@ -33,11 +36,19 @@ public class Prevalent {
         Prevalent.role = role;
     }
 
-    public static List<String> getOptions() {
-        return options;
+    public static String getPassword() {
+        return password;
     }
 
-    public static void setOptions(List<String> options) {
-        Prevalent.options = options;
+    public static void setPassword(String password) {
+        Prevalent.password = password;
+    }
+
+    public static List<String> getActions() {
+        return actions;
+    }
+
+    public static void setActions(List<String> actions) {
+        Prevalent.actions = actions;
     }
 }

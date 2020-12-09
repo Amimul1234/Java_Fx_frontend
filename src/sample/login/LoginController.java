@@ -1,4 +1,4 @@
-package sample;
+package sample.login;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -10,14 +10,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.Prevalent;
 import sample.socket.Connector;
+import sharedClasses.LoginReq;
+import sharedClasses.User;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.List;
 
-public class Controller {
+public class LoginController {
 
     private final Connector connector = Connector.getInstance();
 
@@ -32,59 +33,53 @@ public class Controller {
 
     @FXML
     void login(ActionEvent event) throws IOException {
-
-        List<String> credential = new ArrayList<>();
-
         String user_name = userName.getText();
         String pass = password.getText();
 
         if(user_name.isEmpty())
         {
-            showAlert(Alert.AlertType.ERROR,"Form Error!", "Please enter username");
-            return;
+            showAlert(Alert.AlertType.ERROR,"Error!", "Please enter username");
         }
 
         else
         {
-            credential.add(user_name);
-            credential.add(pass);
+
+            LoginReq loginReq = new LoginReq();
+            loginReq.setUserName(user_name);
+            loginReq.setPassword(pass);
 
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    checkUser(credential);
+                    checkUser(loginReq);//Running check on a different thread
                 }
             });
 
         }
     }
 
-    private void checkUser(List<String> credential)
+    private void checkUser(LoginReq loginReq) //checking user authentication
     {
         try {
 
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(connector.getSocket().getOutputStream());
 
-            objectOutputStream.writeObject(credential);
+            objectOutputStream.writeObject(loginReq);
             objectOutputStream.flush();
 
             ObjectInputStream objectInputStream = new ObjectInputStream(connector.getSocket().getInputStream());
-            List<String> response = (List<String>) objectInputStream.readObject();
 
-            if(response.get(0).equals("false"))
+            User user = (User) objectInputStream.readObject();
+
+
+            if(user.isSuccessful())
             {
-                Prevalent.setUser_name(response.get(1));
-                Prevalent.setImage_url(response.get(2));
-                Prevalent.setRole(response.get(3));
+                Prevalent.setName(user.getName());
+                Prevalent.setImage(user.getImage());
+                Prevalent.setRole(user.getRole());
+                Prevalent.setActions(user.getActions());
 
-                int size = response.size();
-
-                for(int i=4; i<size; i++)
-                {
-                    Prevalent.getOptions().add(response.get(i));
-                }
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("role_scene.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/role_scene.fxml"));
                 Stage stage = (Stage) loginButton.getScene().getWindow();
                 Scene scene = new Scene(loader.load(), 1114, 627);
                 stage.setScene(scene);
