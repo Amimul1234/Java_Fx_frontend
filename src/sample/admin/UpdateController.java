@@ -43,6 +43,7 @@ public class UpdateController {
     }
 
     public void initialize() {
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -63,9 +64,39 @@ public class UpdateController {
                 modifiedList.add(new Modified(user.getName(), user.getImage(), user.getRole(), user.getPassword(), user.getActions(), user.getUser_id()));
             }
 
-            data = FXCollections.observableArrayList(modifiedList);
+            data = FXCollections.observableList(modifiedList);
 
             table_of_users.setItems(data);
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while(true)
+                    {
+                        try {
+
+                            System.out.println("Called");
+                            ObjectInputStream objectInputStream = new ObjectInputStream(Connector.getInstance().getSocket().getInputStream());
+                            List<User> userList1;
+                            userList1 = (List<User>) objectInputStream.readObject();
+
+                            modifiedList.clear();
+
+                            for(User user : userList1)
+                            {
+                                modifiedList.add(new Modified(user.getName(), user.getImage(), user.getRole(), user.getPassword(), user.getActions(), user.getUser_id()));
+                            }
+
+                            data = FXCollections.observableArrayList(modifiedList);
+                            table_of_users.setItems(data);
+
+                        } catch (IOException | ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).start();
+
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
