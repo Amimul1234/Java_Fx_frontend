@@ -16,8 +16,6 @@ import javafx.stage.Stage;
 import sample.socket.Connector;
 import java.io.ByteArrayInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 public class RoleController {
     @FXML

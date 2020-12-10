@@ -1,34 +1,36 @@
-package sharedClasses;
+package sample.admin;
 
-import java.io.Serial;
-import java.io.Serializable;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 6529685098267757690L;
-    private boolean isSuccessful;
-    private int user_id;
+public class Modified{
+    private Integer id;
     private String name;
     private byte[] image;
     private String role;
     private String password;
     private List<String> actions;
+    private ImageView imageView;
 
-    public User() {
+    public Modified() {
         actions = new ArrayList<>();
-        isSuccessful = false;
     }
 
-    public User(String name, byte[] image, String role, String password, int user_id) {
+    public Modified(String name, byte[] image, String role, String password, List<String> actions, int id) {
         this.name = name;
         this.image = image;
         this.role = role;
         this.password = password;
-        this.actions = new ArrayList<>();
-        isSuccessful = false;
-        this.user_id = user_id;
+        this.actions = actions;
+        this.id = id;
+        imageView = new ImageView(new Image(new ByteArrayInputStream(image)));
+        imageView.setFitHeight(100);
+        imageView.setFitWidth(130);
+        imageView.setSmooth(true);
+        imageView.setPreserveRatio(true);
     }
 
     public String getName() {
@@ -45,6 +47,7 @@ public class User implements Serializable {
 
     public void setImage(byte[] image) {
         this.image = image;
+        imageView = new ImageView(new Image(new ByteArrayInputStream(image)));
     }
 
     public String getRole() {
@@ -68,10 +71,6 @@ public class User implements Serializable {
         image = new byte[size];
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
     public List<String> getActions() {
         return actions;
     }
@@ -80,19 +79,19 @@ public class User implements Serializable {
         this.actions = actions;
     }
 
-    public boolean isSuccessful() {
-        return isSuccessful;
+    public ImageView getImageView() {
+        return imageView;
     }
 
-    public void setSuccessful(boolean successful) {
-        isSuccessful = successful;
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
