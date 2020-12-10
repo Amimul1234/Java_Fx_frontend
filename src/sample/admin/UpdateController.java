@@ -87,8 +87,7 @@ public class UpdateController {
                                 modifiedList.add(new Modified(user.getName(), user.getImage(), user.getRole(), user.getPassword(), user.getActions(), user.getUser_id()));
                             }
 
-                            data = FXCollections.observableArrayList(modifiedList);
-                            table_of_users.setItems(data);
+                            table_of_users.refresh();
 
                         } catch (IOException | ClassNotFoundException e) {
                             e.printStackTrace();
