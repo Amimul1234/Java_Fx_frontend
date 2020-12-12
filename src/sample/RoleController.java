@@ -95,9 +95,6 @@ public class RoleController {
             objectOutputStream.writeObject(admin_req_from_client);
             objectOutputStream.flush();
 
-            //This block was for all user option selector
-            //From next block gonna add role specific actions
-
             int value = Integer.parseInt(option_input.getText());
 
             if(Prevalent.getRole().equals("Admin"))

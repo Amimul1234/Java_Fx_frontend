@@ -102,13 +102,6 @@ public class CreateController {
                     }
                 });
 
-                //Image Retrieval code
-                /*
-                System.out.println(Arrays.toString(user.getImage()));
-
-                */
-
-
             } catch (Exception e) {
                 e.printStackTrace();
                  showAlert(Alert.AlertType.ERROR, "Error!", "Error occurred while reading from file");
