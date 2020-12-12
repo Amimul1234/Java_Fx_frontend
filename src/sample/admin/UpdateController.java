@@ -22,8 +22,6 @@ import java.util.List;
 public class UpdateController {
 
     private User userGlobal;
-    private Thread thread;
-    private int thread_runner = 1;
 
     private final List<String> roles = new ArrayList<>()
     {
@@ -104,42 +102,6 @@ public class UpdateController {
 
             table_of_users.setItems(data);
 
-
-            thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while(true)
-                    {
-                        try {
-                            if(thread_runner == 1)
-                            {
-                                System.out.println("Calling thread");
-
-                                userList = (List<User>) Connector.getInstance().getObjectInputStream().readObject();
-
-                                modifiedList.clear();
-
-                                for(User user : userList)
-                                {
-                                    modifiedList.add(new Modified(user.getName(), user.getImage(), user.getRole(), user.getPassword(), user.getActions(), user.getUser_id()));
-                                }
-
-                                table_of_users.refresh();
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            break;
-                        }
-                    }
-                }
-            });
-
-            thread.start();
-
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -147,7 +109,6 @@ public class UpdateController {
 
     public void initialize()
     {
-        System.out.println("Called the update");
         update_user_button.setVisible(false);
         update_role.setVisible(false);
         user_role_lable.setVisible(false);
@@ -235,7 +196,6 @@ public class UpdateController {
                         objectOutputStream.writeObject(userGlobal);
                         objectOutputStream.flush();
 
-                        thread_runner = 0;
 
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/role_scene.fxml"));
                         Stage stage = (Stage) update_user_button.getScene().getWindow();

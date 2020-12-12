@@ -74,11 +74,11 @@ public class CreateController {
                     @Override
                     public void run() {
                         try {
-                            ObjectOutputStream objectOutputStream = new ObjectOutputStream(Connector.getInstance().getSocket().getOutputStream());
+                            ObjectOutputStream objectOutputStream = Connector.getInstance().getObjectOutputStream();
                             objectOutputStream.writeObject(user);
                             objectOutputStream.flush();
 
-                            ObjectInputStream objectInputStream = new ObjectInputStream(Connector.getInstance().getSocket().getInputStream());
+                            ObjectInputStream objectInputStream = Connector.getInstance().getObjectInputStream();
                             String response = (String) objectInputStream.readObject();
 
                             if(response.equals("success"))

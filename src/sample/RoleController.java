@@ -90,7 +90,7 @@ public class RoleController {
     private void sendNecessaryActionToServer() {
         try
         {
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(Connector.getInstance().getSocket().getOutputStream());
+            ObjectOutputStream objectOutputStream = Connector.getInstance().getObjectOutputStream();
             String admin_req_from_client = option_input.getText();
             objectOutputStream.writeObject(admin_req_from_client);
             objectOutputStream.flush();

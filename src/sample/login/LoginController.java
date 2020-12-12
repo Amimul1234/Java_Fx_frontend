@@ -62,12 +62,12 @@ public class LoginController {
     {
         try {
 
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(connector.getSocket().getOutputStream());
+            ObjectOutputStream objectOutputStream = Connector.getInstance().getObjectOutputStream();
 
             objectOutputStream.writeObject(loginReq);
             objectOutputStream.flush();
 
-            ObjectInputStream objectInputStream = new ObjectInputStream(connector.getSocket().getInputStream());
+            ObjectInputStream objectInputStream = Connector.getInstance().getObjectInputStream();
 
             User user = (User) objectInputStream.readObject();
 
