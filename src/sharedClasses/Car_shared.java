@@ -3,9 +3,10 @@ package sharedClasses;
 import java.io.Serial;
 import java.io.Serializable;
 
-public class Car implements Serializable {
+public class Car_shared implements Serializable {
     @Serial
     private final long serialUID = 5641515L;
+    private int quantity;
     private String CarReg;
     private int YearMade;
     private String Colour1;
@@ -14,20 +15,37 @@ public class Car implements Serializable {
     private String CarMake;
     private String CarModel;
     private int Price;
+    private byte[] carImage;
 
-    public Car(String[] str) {
-        CarReg = str[0];
-        YearMade = Integer.parseInt(str[1]);
-        Colour1 = str[2];
-        Colour2 = str[3];
-        Colour3 = str[4];
-        CarMake = str[5];
-        CarModel = str[6];
-        Price = Integer.parseInt(str[7]);
+    public Car_shared() {
     }
 
-    public Car() {
+    public Car_shared(int quantity, String carReg, int yearMade, String colour1,
+                      String colour2, String colour3, String carMake, String carModel,
+                      int price, byte[] carImage)
+    {
+        this.quantity = quantity;
+        CarReg = carReg;
+        YearMade = yearMade;
+        Colour1 = colour1;
+        Colour2 = colour2;
+        Colour3 = colour3;
+        CarMake = carMake;
+        CarModel = carModel;
+        Price = price;
+        this.carImage = carImage;
+    }
 
+    public long getSerialUID() {
+        return serialUID;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public String getCarReg() {
@@ -92,5 +110,13 @@ public class Car implements Serializable {
 
     public void setPrice(int price) {
         Price = price;
+    }
+
+    public byte[] getCarImage() {
+        return carImage;
+    }
+
+    public void setCarImage(byte[] carImage) {
+        this.carImage = carImage;
     }
 }
