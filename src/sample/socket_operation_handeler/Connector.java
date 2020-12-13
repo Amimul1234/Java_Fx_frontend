@@ -1,4 +1,4 @@
-package sample.socket;
+package sample.socket_operation_handeler;
 
 import java.io.*;
 import java.net.Socket;

@@ -13,7 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import sample.socket.Connector;
+import sample.socket_operation_handeler.Connector;
 import sharedClasses.User;
 import java.io.*;
 import java.util.ArrayList;
@@ -31,6 +31,10 @@ public class RemoveController {
             add("Viewer");
         }
     };
+
+    ObservableList<Modified> data;
+
+    private List<User> userList = new ArrayList<>();
 
     @FXML
     private TableView<Modified> table_of_users;
@@ -74,9 +78,6 @@ public class RemoveController {
     @FXML
     private Button update_user_button;
 
-    ObservableList<Modified> data;
-    private List<User> userList = new ArrayList<>();
-
     private void initializeColumns()
     {
         user_id.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -85,26 +86,34 @@ public class RemoveController {
         user_role.setCellValueFactory(new PropertyValueFactory<>("role"));
     }
 
-    private void populateTable()
+    private void populateTable() //Populating the user table with user data
     {
-        try {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    userList = (List<User>) Connector.getInstance().getObjectInputStream().readObject();
+                    List<Modified> modifiedList = new ArrayList<>();
 
-            userList = (List<User>) Connector.getInstance().getObjectInputStream().readObject();
+                    for(User user : userList)
+                    {
+                        modifiedList.add(new Modified(user.getName(), user.getImage(), user.getRole(), user.getPassword(), user.getActions(), user.getUser_id()));
+                    }
 
-            List<Modified> modifiedList = new ArrayList<>();
+                    data = FXCollections.observableList(modifiedList);
 
-            for(User user : userList)
-            {
-                modifiedList.add(new Modified(user.getName(), user.getImage(), user.getRole(), user.getPassword(), user.getActions(), user.getUser_id()));
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            table_of_users.setItems(data);
+                        }
+                    });
+
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
-
-            data = FXCollections.observableList(modifiedList);
-
-            table_of_users.setItems(data);
-
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        }).start();
     }
 
     public void initialize()
@@ -122,14 +131,8 @@ public class RemoveController {
 
         initializeColumns();
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                populateTable();
-            }
-        });
+        populateTable();
     }
-
 
     @FXML
     void search_for_user(ActionEvent event) {
@@ -137,7 +140,7 @@ public class RemoveController {
 
         if(user_id.isEmpty())
         {
-            showAlert(Alert.AlertType.ERROR, "Error!", "User id can not be empty");
+            showAlert("Error!", "User id can not be empty");
         }
 
         try
@@ -176,51 +179,66 @@ public class RemoveController {
 
         }catch (Exception e)
         {
-            showAlert(Alert.AlertType.ERROR, "ERROR", e.getLocalizedMessage());
+            showAlert("ERROR", e.getLocalizedMessage());
         }
     }
 
     @FXML
-    void delete_user(ActionEvent event) {
+    void delete_user(ActionEvent event)
+    {
         if(userGlobal != null)
         {
             userGlobal.setName(update_user_name.getText());
             userGlobal.setPassword(update_password.getText());
             userGlobal.setRole(update_role.getSelectionModel().getSelectedItem());
 
-            Platform.runLater(new Runnable() {
+            new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    try {
-                        ObjectOutputStream objectOutputStream = Connector.getInstance().getObjectOutputStream();
-                        objectOutputStream.writeObject(userGlobal);
-                        objectOutputStream.flush();
+                    writeToServer(userGlobal);
 
-
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/role_scene.fxml"));
-                        Stage stage = (Stage) update_user_button.getScene().getWindow();
-                        Scene scene = new Scene(loader.load(), 1114, 627);
-                        stage.setScene(scene);
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/role_scene.fxml"));
+                            Stage stage = (Stage) update_user_button.getScene().getWindow();
+                            Scene scene = null;
+                            try {
+                                scene = new Scene(loader.load(), 1114, 627);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            stage.setScene(scene);
+                        }
+                    });
                 }
-            });
+            }).start();
+
         }
 
         else {
-            showAlert(Alert.AlertType.ERROR, "Error!", "Please select an user to continue");
+            showAlert("Error!", "Please select an user to continue");
         }
     }
 
-    private static void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
+    private void writeToServer(User userGlobal)
+    {
+        ObjectOutputStream objectOutputStream = Connector.getInstance().getObjectOutputStream();
+        try {
+            objectOutputStream.writeObject(userGlobal);
+            objectOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static void showAlert(String title, String message)
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-
 }

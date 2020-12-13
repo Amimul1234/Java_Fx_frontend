@@ -11,11 +11,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.Prevalent;
-import sample.socket.Connector;
+import sample.socket_operation_handeler.Connector;
 import sharedClasses.LoginReq;
 import sharedClasses.User;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class LoginController {
@@ -33,6 +32,7 @@ public class LoginController {
 
     @FXML
     void login(ActionEvent event) throws IOException {
+
         String user_name = userName.getText();
         String pass = password.getText();
 
@@ -43,34 +43,46 @@ public class LoginController {
 
         else
         {
-
             LoginReq loginReq = new LoginReq();
             loginReq.setUserName(user_name);
             loginReq.setPassword(pass);
 
-            Platform.runLater(new Runnable() {
+            new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    checkUser(loginReq);//Running check on a different thread
+                    writeToServer(loginReq);
                 }
-            });
+            }).start();
 
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    checkUser();
+                }
+            }).start();
         }
     }
 
-    private void checkUser(LoginReq loginReq) //checking user authentication
+    private void writeToServer(LoginReq loginReq)//Write user name and password for checking
     {
+
+        ObjectOutputStream objectOutputStream = Connector.getInstance().getObjectOutputStream();
+
         try {
-
-            ObjectOutputStream objectOutputStream = Connector.getInstance().getObjectOutputStream();
-
             objectOutputStream.writeObject(loginReq);
             objectOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-            ObjectInputStream objectInputStream = Connector.getInstance().getObjectInputStream();
+    private void checkUser() //checking user authentication
+    {
 
-            User user = (User) objectInputStream.readObject();
+        User user = null;
 
+        try {
+            user = (User) connector.getObjectInputStream().readObject();
 
             if(user.isSuccessful())
             {
@@ -79,20 +91,35 @@ public class LoginController {
                 Prevalent.setRole(user.getRole());
                 Prevalent.setActions(user.getActions());
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/role_scene.fxml"));
-                Stage stage = (Stage) loginButton.getScene().getWindow();
-                Scene scene = new Scene(loader.load(), 1114, 627);
-                stage.setScene(scene);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/role_scene.fxml"));
+                        Stage stage = (Stage) loginButton.getScene().getWindow();
+                        Scene scene = null;
+                        try {
+                            scene = new Scene(loader.load(), 1114, 627);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        stage.setScene(scene);
+                    }
+                });
             }
+
             else
             {
-                showAlert(Alert.AlertType.ERROR,"Credential Error!", "Please enter correct username and password");
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        showAlert(Alert.AlertType.ERROR,"Credential Error!", "Please enter correct username and password");
+                    }
+                });
             }
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 
     private static void showAlert(Alert.AlertType alertType, String title, String message) {

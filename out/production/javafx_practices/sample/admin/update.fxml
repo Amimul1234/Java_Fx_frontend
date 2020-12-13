@@ -34,11 +34,11 @@
       <Button layoutX="267.0" layoutY="568.0" mnemonicParsing="false" onAction="#search_for_user" text="Edit User" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="805.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="update_image" fitHeight="150.0" fitWidth="200.0" layoutX="783.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true" />
-      <Text fx:id="user_name_lable" layoutX="684.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Name:" />
+      <Text fx:id="user_name_label" layoutX="684.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Name:" />
       <TextField fx:id="update_user_name" layoutX="763.0" layoutY="262.0" prefHeight="25.0" prefWidth="284.0" />
-      <Text fx:id="user_password_lable" layoutX="684.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" />
+      <Text fx:id="user_password_label" layoutX="684.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" />
       <TextField fx:id="update_password" layoutX="763.0" layoutY="310.0" prefHeight="25.0" prefWidth="284.0" />
-      <Text fx:id="user_role_lable" layoutX="684.0" layoutY="371.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Role:" />
+      <Text fx:id="user_role_label" layoutX="684.0" layoutY="371.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Role:" />
       <ChoiceBox fx:id="update_role" layoutX="763.0" layoutY="354.0" prefHeight="25.0" prefWidth="284.0" />
       <Button fx:id="update_user_button" layoutX="767.0" layoutY="431.0" mnemonicParsing="false" onAction="#update_user" prefHeight="25.0" prefWidth="284.0" text="Update User" />
    </children>

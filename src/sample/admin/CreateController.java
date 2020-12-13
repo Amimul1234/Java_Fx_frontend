@@ -13,7 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import sample.socket.Connector;
+import sample.socket_operation_handeler.Connector;
 import sharedClasses.User;
 import java.io.*;
 
@@ -70,43 +70,68 @@ public class CreateController {
                 fileInputStream.read(user.getImage(), 0, user.getImage().length);
                 fileInputStream.close();
 
-                Platform.runLater(new Runnable() {
+                new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        try {
-                            ObjectOutputStream objectOutputStream = Connector.getInstance().getObjectOutputStream();
-                            objectOutputStream.writeObject(user);
-                            objectOutputStream.flush();
-
-                            ObjectInputStream objectInputStream = Connector.getInstance().getObjectInputStream();
-                            String response = (String) objectInputStream.readObject();
-
-                            if(response.equals("success"))
-                            {
-                                showAlert(Alert.AlertType.INFORMATION, "Success", "User created");
-                                FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/role_scene.fxml"));
-                                Stage stage = (Stage) create_user_button.getScene().getWindow();
-                                Scene scene = new Scene(loader.load(), 1114, 627);
-                                stage.setScene(scene);
-                            }
-
-                            else
-                            {
-                                showAlert(Alert.AlertType.ERROR, "Errow!", "Can not create user");
-                            }
-
-                        } catch (IOException | ClassNotFoundException e) {
-                            e.printStackTrace();
-                            showAlert(Alert.AlertType.ERROR, "Error!", e.getLocalizedMessage());
-                        }
+                        writeToServer(user);
                     }
-                });
+                }).start();
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String response = readServerResponse();
+
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(response.equals("success"))
+                                {
+                                    showAlert(Alert.AlertType.INFORMATION, "Success", "User created");
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/role_scene.fxml"));
+                                    Stage stage = (Stage) create_user_button.getScene().getWindow();
+                                    Scene scene = null;
+                                    try {
+                                        scene = new Scene(loader.load(), 1114, 627);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    stage.setScene(scene);
+                                }
+                                else
+                                {
+                                    showAlert(Alert.AlertType.ERROR, "Error!", "Can not create user, check server");
+                                }
+                            }
+                        });
+                    }
+                }).start();
 
             } catch (Exception e) {
                 e.printStackTrace();
                  showAlert(Alert.AlertType.ERROR, "Error!", "Error occurred while reading from file");
                  return;
             }
+        }
+    }
+
+    private String readServerResponse() {
+        ObjectInputStream objectInputStream = Connector.getInstance().getObjectInputStream();
+        try {
+            return (String) objectInputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return "Error!";
+        }
+    }
+
+    private void writeToServer(User user) {
+        ObjectOutputStream objectOutputStream = Connector.getInstance().getObjectOutputStream();
+        try {
+            objectOutputStream.writeObject(user);
+            objectOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

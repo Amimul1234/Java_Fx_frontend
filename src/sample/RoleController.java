@@ -13,7 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import sample.socket.Connector;
+import sample.socket_operation_handeler.Connector;
 import java.io.ByteArrayInputStream;
 import java.io.ObjectOutputStream;
 
