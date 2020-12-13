@@ -142,7 +142,7 @@ public class UpdateController {
 
         if(user_id.isEmpty())
         {
-            showAlert(Alert.AlertType.ERROR, "Error!", "User id can not be empty");
+            showAlert("Error!", "User id can not be empty");
         }
 
         try
@@ -181,7 +181,7 @@ public class UpdateController {
 
         }catch (Exception e)
         {
-            showAlert(Alert.AlertType.ERROR, "ERROR", e.getLocalizedMessage());
+            showAlert("ERROR", e.getLocalizedMessage());
         }
     }
 
@@ -217,7 +217,7 @@ public class UpdateController {
         }
 
         else {
-            showAlert(Alert.AlertType.ERROR, "Error!", "Please select an user to continue");
+            showAlert("Error!", "Please select an user to continue");
         }
     }
 
@@ -232,9 +232,9 @@ public class UpdateController {
         }
     }
 
-    private static void showAlert(Alert.AlertType alertType, String title, String message)
+    private static void showAlert(String title, String message)
     {
-        Alert alert = new Alert(alertType);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);

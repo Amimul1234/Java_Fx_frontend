@@ -12,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.Prevalent;
 import sample.socket_operation_handeler.Connector;
+import sample.socket_operation_handeler.Connector_2_for_user_list_update;
+import sample.socket_operation_handeler.Connector_3_for_car_list_update;
 import sharedClasses.LoginReq;
 import sharedClasses.User;
 import java.io.IOException;
@@ -20,6 +22,8 @@ import java.io.ObjectOutputStream;
 public class LoginController {
 
     private final Connector connector = Connector.getInstance();
+    private final Connector_2_for_user_list_update connector_2_for_user_list_update = Connector_2_for_user_list_update.getInstance();
+    private final Connector_3_for_car_list_update connector_3_for_car_list_update = Connector_3_for_car_list_update.getInstance();
 
     @FXML
     private TextField userName;
