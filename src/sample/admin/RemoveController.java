@@ -135,7 +135,8 @@ public class RemoveController {
     }
 
     @FXML
-    void search_for_user(ActionEvent event) {
+    void search_for_user(ActionEvent event)
+    {
         String user_id = user_id_for_search.getText();
 
         if(user_id.isEmpty())

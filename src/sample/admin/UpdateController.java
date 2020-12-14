@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import sample.socket_operation_handeler.Connector;
+import sample.socket_operation_handeler.Connector_2_for_user_list_update;
 import sharedClasses.User;
 import java.io.*;
 import java.util.ArrayList;
@@ -106,6 +107,7 @@ public class UpdateController {
                         @Override
                         public void run() {
                             table_of_users.setItems(data);
+                            table_of_users.refresh();
                         }
                     });
 
@@ -114,6 +116,41 @@ public class UpdateController {
                 }
             }
         }).start();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true)
+                {
+                    try {
+                        userList = (List<User>) Connector_2_for_user_list_update.getInstance().getObjectInputStream().readObject();
+
+                        List<Modified> modifiedList = new ArrayList<>();
+
+                        for(User user : userList)
+                        {
+                            modifiedList.add(new Modified(user.getName(), user.getImage(), user.getRole(), user.getPassword(), user.getActions(), user.getUser_id()));
+                        }
+
+                        data = FXCollections.observableList(modifiedList);
+
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                table_of_users.setItems(data);
+                                table_of_users.refresh();
+                            }
+                        });
+
+                    } catch (IOException | ClassNotFoundException e) {
+                        e.printStackTrace();
+                        break;
+                    }
+                }
+            }
+        }).start();
+
+
     }
 
     public void initialize()
