@@ -7,24 +7,19 @@ import java.net.Socket;
 
 public class Connector_2_for_user_list_update {
     private static Connector_2_for_user_list_update connector = null;
+
     private Socket socket;
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
 
     private Connector_2_for_user_list_update() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    socket = new Socket("localhost", 45555);
-                    objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-                    objectInputStream = new ObjectInputStream(socket.getInputStream());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
+        try {
+            socket = new Socket("localhost", 45555);
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectInputStream = new ObjectInputStream(socket.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static Connector_2_for_user_list_update getInstance()

@@ -11,18 +11,13 @@ public class Connector {
     private ObjectOutputStream objectOutputStream;
 
     private Connector() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    socket = new Socket("localhost", 50000);
-                    objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-                    objectInputStream = new ObjectInputStream(socket.getInputStream());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+        try {
+            socket = new Socket("localhost", 50000);
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectInputStream = new ObjectInputStream(socket.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static Connector getInstance()

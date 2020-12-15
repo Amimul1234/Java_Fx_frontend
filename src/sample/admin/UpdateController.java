@@ -13,8 +13,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sample.login.Main;
 import sample.socket_operation_handeler.Connector;
-import sample.socket_operation_handeler.Connector_2_for_user_list_update;
 import sharedClasses.User;
 import java.io.*;
 import java.util.ArrayList;
@@ -23,6 +23,8 @@ import java.util.List;
 public class UpdateController {
 
     private User userGlobal;
+    public static Thread prev_thread = null;
+    public static List<User> userList = new ArrayList<>();
 
     private final List<String> roles = new ArrayList<>()
     {
@@ -35,7 +37,6 @@ public class UpdateController {
 
     ObservableList<Modified> data;
 
-    private List<User> userList = new ArrayList<>();
 
     @FXML
     private TableView<Modified> table_of_users;
@@ -93,7 +94,8 @@ public class UpdateController {
             @Override
             public void run() {
                 try {
-                    userList = (List<User>) Connector.getInstance().getObjectInputStream().readObject();
+                    userList = (List<User>) Main.connector.getObjectInputStream().readObject();
+
                     List<Modified> modifiedList = new ArrayList<>();
 
                     for(User user : userList)
@@ -117,13 +119,18 @@ public class UpdateController {
             }
         }).start();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true)
-                {
-                    try {
-                        userList = (List<User>) Connector_2_for_user_list_update.getInstance().getObjectInputStream().readObject();
+        if(prev_thread == null)
+        {
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while(true)
+                    {
+                        try {
+                            userList = (List<User>) Main.connector_2_for_user_list_update.getObjectInputStream().readObject();
+                        } catch (IOException | ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
 
                         List<Modified> modifiedList = new ArrayList<>();
 
@@ -142,15 +149,13 @@ public class UpdateController {
                             }
                         });
 
-                    } catch (IOException | ClassNotFoundException e) {
-                        e.printStackTrace();
-                        break;
                     }
                 }
-            }
-        }).start();
-
-
+            });
+            prev_thread = thread;
+            thread.setDaemon(true);
+            thread.start();
+        }
     }
 
     public void initialize()
