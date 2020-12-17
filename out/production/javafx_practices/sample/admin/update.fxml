@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="627.0" prefWidth="1072.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.admin.UpdateController">
+<AnchorPane prefHeight="627.0" prefWidth="1114.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.admin.UpdateController">
    <children>
       <Text layoutX="240.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update User">
          <font>
@@ -33,13 +33,13 @@
       <TextField fx:id="user_id_for_search" layoutX="179.0" layoutY="522.0" prefHeight="33.0" prefWidth="241.0" />
       <Button layoutX="267.0" layoutY="568.0" mnemonicParsing="false" onAction="#search_for_user" text="Edit User" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="805.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="update_image" fitHeight="150.0" fitWidth="200.0" layoutX="783.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true" />
-      <Text fx:id="user_name_label" layoutX="684.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Name:" />
-      <TextField fx:id="update_user_name" layoutX="763.0" layoutY="262.0" prefHeight="25.0" prefWidth="284.0" />
-      <Text fx:id="user_password_label" layoutX="684.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" />
-      <TextField fx:id="update_password" layoutX="763.0" layoutY="310.0" prefHeight="25.0" prefWidth="284.0" />
-      <Text fx:id="user_role_label" layoutX="684.0" layoutY="371.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Role:" />
-      <ChoiceBox fx:id="update_role" layoutX="763.0" layoutY="354.0" prefHeight="25.0" prefWidth="284.0" />
-      <Button fx:id="update_user_button" layoutX="767.0" layoutY="431.0" mnemonicParsing="false" onAction="#update_user" prefHeight="25.0" prefWidth="284.0" text="Update User" />
+      <ImageView fx:id="update_image" fitHeight="150.0" fitWidth="200.0" layoutX="809.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true" />
+      <Text fx:id="user_name_label" layoutX="706.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Name:" />
+      <TextField fx:id="update_user_name" layoutX="786.0" layoutY="262.0" prefHeight="25.0" prefWidth="284.0" />
+      <Text fx:id="user_password_label" layoutX="714.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" />
+      <TextField fx:id="update_password" layoutX="786.0" layoutY="310.0" prefHeight="25.0" prefWidth="284.0" />
+      <Text fx:id="user_role_label" layoutX="740.0" layoutY="371.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Role:" />
+      <ChoiceBox fx:id="update_role" layoutX="786.0" layoutY="354.0" prefHeight="25.0" prefWidth="284.0" />
+      <Button fx:id="update_user_button" layoutX="786.0" layoutY="433.0" mnemonicParsing="false" onAction="#update_user" prefHeight="25.0" prefWidth="284.0" text="Update User" />
    </children>
 </AnchorPane>

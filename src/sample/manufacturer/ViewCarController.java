@@ -18,7 +18,7 @@ public class ViewCarController {
 
     public static Thread prev_thread = null;
     public static List<Car_shared> carSharedList = new ArrayList<>();
-    ObservableList<ModifiedCar> data;
+    private ObservableList<ModifiedCar> data;
 
     @FXML
     private TableView<ModifiedCar> table_of_users;

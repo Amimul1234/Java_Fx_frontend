@@ -41,9 +41,8 @@ public class ModifiedCar implements Serializable {
 
         imageView = new javafx.scene.image.ImageView(new Image(new ByteArrayInputStream(carImage)));
         imageView.setFitHeight(100);
-        imageView.setFitWidth(130);
+        imageView.setFitWidth(180);
         imageView.setSmooth(true);
-        imageView.setPreserveRatio(true);
     }
 
     public long getSerialUID() {

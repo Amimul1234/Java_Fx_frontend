@@ -136,7 +136,8 @@ public class UpdateController {
 
                         for(User user : userList)
                         {
-                            modifiedUserList.add(new ModifiedUser(user.getName(), user.getImage(), user.getRole(), user.getPassword(), user.getActions(), user.getUser_id()));
+                            modifiedUserList.add(new ModifiedUser(user.getName(), user.getImage(), user.getRole(),
+                                    user.getPassword(), user.getActions(), user.getUser_id()));
                         }
 
                         data = FXCollections.observableList(modifiedUserList);
@@ -232,6 +233,7 @@ public class UpdateController {
     {
         if(userGlobal != null)
         {
+
             userGlobal.setName(update_user_name.getText());
             userGlobal.setPassword(update_password.getText());
             userGlobal.setRole(update_role.getSelectionModel().getSelectedItem());
@@ -239,7 +241,9 @@ public class UpdateController {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
+
                     writeToSever(userGlobal);
+
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {

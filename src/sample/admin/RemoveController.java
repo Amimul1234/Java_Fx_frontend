@@ -65,13 +65,13 @@ public class RemoveController {
     private TextField update_user_name;
 
     @FXML
-    private Text user_password_lable;
+    private Text user_password_label;
 
     @FXML
     private TextField update_password;
 
     @FXML
-    private Text user_role_lable;
+    private Text user_role_label;
 
     @FXML
     private ChoiceBox<String> update_role;
@@ -160,9 +160,9 @@ public class RemoveController {
     {
         update_user_button.setVisible(false);
         update_role.setVisible(false);
-        user_role_lable.setVisible(false);
+        user_role_label.setVisible(false);
         update_password.setVisible(false);
-        user_password_lable.setVisible(false);
+        user_password_label.setVisible(false);
         update_user_name.setVisible(false);
         user_name_lable.setVisible(false);
         update_image.setVisible(false);
@@ -194,9 +194,9 @@ public class RemoveController {
                 {
                     update_user_button.setVisible(true);
                     update_role.setVisible(true);
-                    user_role_lable.setVisible(true);
+                    user_role_label.setVisible(true);
                     update_password.setVisible(true);
-                    user_password_lable.setVisible(true);
+                    user_password_label.setVisible(true);
                     update_user_name.setVisible(true);
                     user_name_lable.setVisible(true);
                     update_image.setVisible(true);
