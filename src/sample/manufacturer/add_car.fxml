@@ -1,14 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sample.manufacturer.AddCarController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.manufacturer.AddCarController">
+    <columnConstraints>
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+    </rowConstraints>
+    <children>
+        <AnchorPane prefHeight="627.0" prefWidth="968.0">
+            <children>
+                <Text fill="RED" layoutX="383.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add A New Car">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                </Text>
+                <ImageView fx:id="car_photo_upload" fitHeight="240.0" fitWidth="377.0" layoutX="14.0" layoutY="204.0" onMouseClicked="#open_file_chooser" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="file:/H:/Project%20materials%20javafx/Car%20Images/Car_%20Auto_%20Vehicle_%20Red%20Car_%20Automobile.png" />
+                    </image>
+                </ImageView>
+                <Text layoutX="84.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Click to upload car image)">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Text>
+                <Text fill="#0059ff" layoutX="650.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Car's Info">
+                    <font>
+                        <Font size="28.0" />
+                    </font>
+                </Text>
+            <Label layoutX="334.0" layoutY="145.0" text="Car Registration Number:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField fx:id="car_registration_number" layoutX="485.0" layoutY="141.0" prefHeight="25.0" prefWidth="449.0" promptText="Please enter car registration number" />
+            <TextField fx:id="car_year_made" layoutX="485.0" layoutY="184.0" prefHeight="25.0" prefWidth="449.0" promptText="Please enter car year made" />
+            <TextField fx:id="car_colour_1" layoutX="483.0" layoutY="227.0" prefHeight="25.0" prefWidth="449.0" promptText="Please enter colour 1" />
+            <TextField fx:id="car_colour_2" layoutX="483.0" layoutY="273.0" prefHeight="25.0" prefWidth="449.0" promptText="Please enter colour2" />
+            <TextField fx:id="car_colour_3" layoutX="483.0" layoutY="314.0" prefHeight="25.0" prefWidth="449.0" promptText="Please enter colour3" />
+            <TextField fx:id="car_make" layoutX="483.0" layoutY="353.0" prefHeight="25.0" prefWidth="449.0" promptText="Please enter car make" />
+            <TextField fx:id="car_model" layoutX="483.0" layoutY="396.0" prefHeight="25.0" prefWidth="449.0" promptText="Please enter car model" />
+            <TextField fx:id="car_price" layoutX="483.0" layoutY="439.0" prefHeight="25.0" prefWidth="449.0" promptText="Please enter car price" />
+            <TextField fx:id="car_quantity" layoutX="484.0" layoutY="484.0" prefHeight="25.0" prefWidth="449.0" promptText="Please enter car quantity" />
+            <Label layoutX="414.0" layoutY="188.0" text="Year Made:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="430.0" layoutY="231.0" text="Colour1:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="432.0" layoutY="277.0" text="Clolur2:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="430.0" layoutY="318.0" text="Colour3:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="418.0" layoutY="357.0" text="Car Make:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="415.0" layoutY="400.0" text="Car Model:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="420.0" layoutY="443.0" text="Car Price:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="395.0" layoutY="488.0" text="Car Quantity:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Button layoutX="235.0" layoutY="550.0" mnemonicParsing="false" onAction="#add_car_to_showroom" prefHeight="37.0" prefWidth="449.0" style="-fx-background-color: #0059ff;" text="Add Car to Showroom" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            </children></AnchorPane>
+    </children>
+</GridPane>

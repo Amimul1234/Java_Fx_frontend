@@ -115,7 +115,8 @@ public class CreateController {
         }
     }
 
-    private String readServerResponse() {
+    private String readServerResponse()
+    {
         ObjectInputStream objectInputStream = Connector.getInstance().getObjectInputStream();
         try {
             return (String) objectInputStream.readObject();
@@ -125,7 +126,8 @@ public class CreateController {
         }
     }
 
-    private void writeToServer(User user) {
+    private void writeToServer(User user)
+    {
         ObjectOutputStream objectOutputStream = Connector.getInstance().getObjectOutputStream();
         try {
             objectOutputStream.writeObject(user);
@@ -136,7 +138,8 @@ public class CreateController {
     }
 
     @FXML
-    void open_file_chooser(MouseEvent event) {
+    void open_file_chooser(MouseEvent event)
+    {
 
         FileChooser.ExtensionFilter imageFilter
                 = new FileChooser.ExtensionFilter("Image Files", "*.jpg"); //getting only images
@@ -159,7 +162,8 @@ public class CreateController {
         }
     }
 
-    private static void showAlert(Alert.AlertType alertType, String title, String message) {
+    private static void showAlert(Alert.AlertType alertType, String title, String message)
+    {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(null);

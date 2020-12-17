@@ -25,7 +25,7 @@ public class RoleController {
     private Text user_name;
 
     @FXML
-    private ListView<String> avilable_options;
+    private ListView<String> available_options;
 
     @FXML
     private TextField option_input;
@@ -40,7 +40,8 @@ public class RoleController {
     private Text role_of_the_user;
 
     @FXML
-    public void initialize() {
+    public void initialize()
+    {
         user_name.setText(Prevalent.getName());
         name_of_the_user.setText(Prevalent.getName());
         role_of_the_user.setText(Prevalent.getRole());
@@ -50,25 +51,32 @@ public class RoleController {
             user_profile_pic.setImage(new Image(new ByteArrayInputStream(Prevalent.getImage())));
         }
 
-        avilable_options.getItems().addAll(Prevalent.getActions());
+        int size = Prevalent.getActions().size();
+
+        for(int i=0; i<size; i++)
+        {
+            available_options.getItems().add(String.valueOf(i+1)+". "+Prevalent.getActions().get(i));
+        }
     }
 
     @FXML
-    void action_taker(ActionEvent event) {
+    void action_taker(ActionEvent event)
+    {
         String option = option_input.getText();
 
         if(option.isEmpty())
         {
-            showAlert(Alert.AlertType.ERROR, "Input error!", "Please enter your choice");
+            showAlert("Input error!", "Please enter your choice");
             return;
         }
+
         try
         {
             int value = Integer.parseInt(option_input.getText());
 
             if(value > Prevalent.getActions().size())
             {
-                showAlert(Alert.AlertType.ERROR, "Input Error !", "Please enter correct option");
+                showAlert("Input Error !", "Please enter correct option");
             }
 
             else
@@ -83,11 +91,12 @@ public class RoleController {
 
         }catch (Exception e)
         {
-            showAlert(Alert.AlertType.ERROR, "Input Error !", "Please enter correct option");
+            showAlert("Input Error !", "Please enter correct option");
         }
     }
 
-    private void sendNecessaryActionToServer() {
+    private void sendNecessaryActionToServer()
+    {
         try
         {
             ObjectOutputStream objectOutputStream = Connector.getInstance().getObjectOutputStream();
@@ -126,21 +135,83 @@ public class RoleController {
             }
             else if(Prevalent.getRole().equals("Viewer"))
             {
-
+                if(value == 1)
+                {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/viewer/view_cars.fxml"));
+                    Stage stage = (Stage) select_choice.getScene().getWindow();
+                    stage.setTitle("View All Cars");
+                    Scene scene = new Scene(loader.load(), 1114, 627);
+                    stage.setScene(scene);
+                }
+                else if(value == 2)
+                {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/viewer/search_by_reg.fxml"));
+                    Stage stage = (Stage) select_choice.getScene().getWindow();
+                    stage.setTitle("Search car by registration number");
+                    Scene scene = new Scene(loader.load(), 1114, 627);
+                    stage.setScene(scene);
+                }
+                else if(value == 3)
+                {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/viewer/search_by_make_model.fxml"));
+                    Stage stage = (Stage) select_choice.getScene().getWindow();
+                    stage.setTitle("Search car by make and model");
+                    Scene scene = new Scene(loader.load(), 1114, 627);
+                    stage.setScene(scene);
+                }
+                else if(value == 4)
+                {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/viewer/buy_car.fxml"));
+                    Stage stage = (Stage) select_choice.getScene().getWindow();
+                    stage.setTitle("Buy a car");
+                    Scene scene = new Scene(loader.load(), 1114, 627);
+                    stage.setScene(scene);
+                }
             }
             else if(Prevalent.getRole().equals("Manufacturer"))
             {
-
+                if(value == 1)
+                {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/manufacturer/view_cars.fxml"));
+                    Stage stage = (Stage) select_choice.getScene().getWindow();
+                    stage.setTitle("View All Cars");
+                    Scene scene = new Scene(loader.load(), 1114, 627);
+                    stage.setScene(scene);
+                }
+                else if(value == 2)
+                {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/manufacturer/add_car.fxml"));
+                    Stage stage = (Stage) select_choice.getScene().getWindow();
+                    stage.setTitle("Add a new car");
+                    Scene scene = new Scene(loader.load(), 1114, 627);
+                    stage.setScene(scene);
+                }
+                else if(value == 3)
+                {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/manufacturer/edit_car.fxml"));
+                    Stage stage = (Stage) select_choice.getScene().getWindow();
+                    stage.setTitle("Edit a car");
+                    Scene scene = new Scene(loader.load(), 1114, 627);
+                    stage.setScene(scene);
+                }
+                else if(value == 4)
+                {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/manufacturer/delete_car.fxml"));
+                    Stage stage = (Stage) select_choice.getScene().getWindow();
+                    stage.setTitle("Delete a car");
+                    Scene scene = new Scene(loader.load(), 1114, 627);
+                    stage.setScene(scene);
+                }
             }
         }catch (Exception e)
         {
             e.printStackTrace();
         }
-
     }
 
-    private static void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
+    private static void showAlert(String title, String message)
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
