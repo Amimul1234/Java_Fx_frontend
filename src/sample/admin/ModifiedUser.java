@@ -6,7 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Modified{
+public class ModifiedUser {
     private Integer id;
     private String name;
     private byte[] image;
@@ -15,17 +15,18 @@ public class Modified{
     private List<String> actions;
     private ImageView imageView;
 
-    public Modified() {
+    public ModifiedUser() {
         actions = new ArrayList<>();
     }
 
-    public Modified(String name, byte[] image, String role, String password, List<String> actions, int id) {
+    public ModifiedUser(String name, byte[] image, String role, String password, List<String> actions, int id) {
         this.name = name;
         this.image = image;
         this.role = role;
         this.password = password;
         this.actions = actions;
         this.id = id;
+
         imageView = new ImageView(new Image(new ByteArrayInputStream(image)));
         imageView.setFitHeight(100);
         imageView.setFitWidth(130);

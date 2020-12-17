@@ -35,23 +35,23 @@ public class UpdateController {
         }
     };
 
-    ObservableList<Modified> data;
+    ObservableList<ModifiedUser> data;
 
 
     @FXML
-    private TableView<Modified> table_of_users;
+    private TableView<ModifiedUser> table_of_users;
 
     @FXML
-    private TableColumn<Modified, Integer> user_id;
+    private TableColumn<ModifiedUser, Integer> user_id;
 
     @FXML
-    private TableColumn<Modified, ImageView> user_image;
+    private TableColumn<ModifiedUser, ImageView> user_image;
 
     @FXML
-    private TableColumn<Modified, String> user_name;
+    private TableColumn<ModifiedUser, String> user_name;
 
     @FXML
-    private TableColumn<Modified, String> user_role;
+    private TableColumn<ModifiedUser, String> user_role;
 
     @FXML
     private TextField user_id_for_search;
@@ -96,14 +96,14 @@ public class UpdateController {
                 try {
                     userList = (List<User>) Main.connector.getObjectInputStream().readObject();
 
-                    List<Modified> modifiedList = new ArrayList<>();
+                    List<ModifiedUser> modifiedUserList = new ArrayList<>();
 
                     for(User user : userList)
                     {
-                        modifiedList.add(new Modified(user.getName(), user.getImage(), user.getRole(), user.getPassword(), user.getActions(), user.getUser_id()));
+                        modifiedUserList.add(new ModifiedUser(user.getName(), user.getImage(), user.getRole(), user.getPassword(), user.getActions(), user.getUser_id()));
                     }
 
-                    data = FXCollections.observableList(modifiedList);
+                    data = FXCollections.observableList(modifiedUserList);
 
                     Platform.runLater(new Runnable() {
                         @Override
@@ -132,14 +132,14 @@ public class UpdateController {
                             e.printStackTrace();
                         }
 
-                        List<Modified> modifiedList = new ArrayList<>();
+                        List<ModifiedUser> modifiedUserList = new ArrayList<>();
 
                         for(User user : userList)
                         {
-                            modifiedList.add(new Modified(user.getName(), user.getImage(), user.getRole(), user.getPassword(), user.getActions(), user.getUser_id()));
+                            modifiedUserList.add(new ModifiedUser(user.getName(), user.getImage(), user.getRole(), user.getPassword(), user.getActions(), user.getUser_id()));
                         }
 
-                        data = FXCollections.observableList(modifiedList);
+                        data = FXCollections.observableList(modifiedUserList);
 
                         Platform.runLater(new Runnable() {
                             @Override

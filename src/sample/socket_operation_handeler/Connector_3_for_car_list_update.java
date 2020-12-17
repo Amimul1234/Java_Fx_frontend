@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class Connector_3_for_car_list_update {
+
     private static Connector_3_for_car_list_update connector = null;
     private Socket socket;
     private ObjectInputStream objectInputStream;
