@@ -2,6 +2,7 @@ package sample.admin;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,18 +14,18 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import sample.login.Main;
+import sample.datas.UserTableData;
 import sample.socket_operation_handeler.Connector;
 import sharedClasses.User;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static sample.admin.UpdateController.userList;
-
 public class RemoveController {
 
     private User userGlobal;
+    public List<User> userList = new ArrayList<>();
+    private ObservableList<ModifiedUser> data = FXCollections.observableArrayList();
 
     private final List<String> roles = new ArrayList<>()
     {
@@ -34,8 +35,6 @@ public class RemoveController {
             add("Viewer");
         }
     };
-
-    ObservableList<ModifiedUser> data;
 
     @FXML
     private TableView<ModifiedUser> table_of_users;
@@ -117,43 +116,17 @@ public class RemoveController {
             }
         }).start();
 
-        if(UpdateController.prev_thread == null)
-        {
-            Thread thread = new Thread(() -> {
+        UserTableData userTableData = UserTableData.getInstance();
 
-                while(true)
-                {
-                    try {
-                        userList = (List<User>) Main.connector_2_for_user_list_update.getObjectInputStream().readObject();
-                    } catch (IOException | ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
+        userTableData.getData().addListener(new ListChangeListener<ModifiedUser>() {
+            @Override
+            public void onChanged(Change<? extends ModifiedUser> change) {
+                data.clear();
+                data.addAll(userTableData.getData());
+                table_of_users.refresh();
+            }
+        });
 
-                    List<ModifiedUser> modifiedUserList = new ArrayList<>();
-
-                    for(User user : userList)
-                    {
-                        modifiedUserList.add(new ModifiedUser(user.getName(), user.getImage(), user.getRole(), user.getPassword(), user.getActions(), user.getUser_id()));
-                    }
-
-                    data = FXCollections.observableList(modifiedUserList);
-
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            table_of_users.setItems(data);
-                            table_of_users.refresh();
-                        }
-                    });
-
-                }
-            });
-
-            UpdateController.prev_thread = thread;
-
-            thread.setDaemon(true);
-            thread.start();
-        }
     }
 
     public void initialize()

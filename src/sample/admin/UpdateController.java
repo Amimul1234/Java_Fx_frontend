@@ -2,6 +2,7 @@ package sample.admin;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sample.datas.UserTableData;
 import sample.login.Main;
 import sample.socket_operation_handeler.Connector;
 import sharedClasses.User;
@@ -23,8 +25,8 @@ import java.util.List;
 public class UpdateController {
 
     private User userGlobal;
-    public static Thread prev_thread = null;
-    public static List<User> userList = new ArrayList<>();
+    public List<User> userList = new ArrayList<>();
+    private ObservableList<ModifiedUser> data = FXCollections.observableArrayList();
 
     private final List<String> roles = new ArrayList<>()
     {
@@ -35,7 +37,6 @@ public class UpdateController {
         }
     };
 
-    ObservableList<ModifiedUser> data;
 
 
     @FXML
@@ -94,6 +95,7 @@ public class UpdateController {
             @Override
             public void run() {
                 try {
+
                     userList = (List<User>) Main.connector.getObjectInputStream().readObject();
 
                     List<ModifiedUser> modifiedUserList = new ArrayList<>();
@@ -119,44 +121,17 @@ public class UpdateController {
             }
         }).start();
 
-        if(prev_thread == null)
-        {
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while(true)
-                    {
-                        try {
-                            userList = (List<User>) Main.connector_2_for_user_list_update.getObjectInputStream().readObject();
-                        } catch (IOException | ClassNotFoundException e) {
-                            e.printStackTrace();
-                        }
 
-                        List<ModifiedUser> modifiedUserList = new ArrayList<>();
+        UserTableData userTableData = UserTableData.getInstance();
 
-                        for(User user : userList)
-                        {
-                            modifiedUserList.add(new ModifiedUser(user.getName(), user.getImage(), user.getRole(),
-                                    user.getPassword(), user.getActions(), user.getUser_id()));
-                        }
-
-                        data = FXCollections.observableList(modifiedUserList);
-
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                table_of_users.setItems(data);
-                                table_of_users.refresh();
-                            }
-                        });
-
-                    }
-                }
-            });
-            prev_thread = thread;
-            thread.setDaemon(true);
-            thread.start();
-        }
+        userTableData.getData().addListener(new ListChangeListener<ModifiedUser>() {
+            @Override
+            public void onChanged(Change<? extends ModifiedUser> change) {
+                data.clear();
+                data.addAll(userTableData.getData());
+                table_of_users.refresh();
+            }
+        });
     }
 
     public void initialize()
