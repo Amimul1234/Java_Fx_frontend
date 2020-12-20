@@ -13,7 +13,7 @@
                 <Font size="33.0" />
             </font>
         </Text>
-        <TableView fx:id="table_of_users" layoutX="7.0" layoutY="87.0" prefHeight="539.0" prefWidth="1098.0">
+        <TableView fx:id="table_of_cars" layoutX="7.0" layoutY="87.0" prefHeight="539.0" prefWidth="1098.0">
          <columns>
             <TableColumn fx:id="car_image" prefWidth="185.0" style="-fx-alignment: CENTER;" text="Car Image" />
             <TableColumn fx:id="registration_number" prefWidth="152.0" style="-fx-alignment: CENTER;" text="Registration Number" />

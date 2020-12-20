@@ -14,7 +14,7 @@ public class CarTableData {
     private List<ModifiedCar> modifiedCarList;
     private ObservableList<ModifiedCar> data;
 
-    private CarTableData carTableData = null;
+    private static CarTableData carTableData = null;
 
     private CarTableData() {
         carSharedList = new ArrayList<>();
