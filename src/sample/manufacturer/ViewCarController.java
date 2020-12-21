@@ -4,15 +4,21 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import sample.datas.CarTableData;
 import sample.login.Main;
 import sharedClasses.Car_shared;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +59,10 @@ public class ViewCarController {
 
     @FXML
     private TableColumn<ModifiedCar, Integer> year_made;
+
+    @FXML
+    private Button back_to_main_menu_button;
+
 
     private void initializeColumns() //Getting table data from car class
     {
@@ -119,6 +129,39 @@ public class ViewCarController {
     {
         initializeColumns();
         populateTable();
+    }
+
+    @FXML
+    void back_to_main_menu(ActionEvent event) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                ObjectOutputStream objectOutputStream = Main.connector.getObjectOutputStream();
+                try {
+                    objectOutputStream.writeObject(new String("back to main menu"));
+                    objectOutputStream.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/role_scene.fxml"));
+                        Stage stage = (Stage) back_to_main_menu_button.getScene().getWindow();
+                        Scene scene = null;
+                        try {
+                            scene = new Scene(loader.load(), 1114, 627);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        stage.setScene(scene);
+                    }
+                });
+
+            }
+        }).start();
     }
 
 }

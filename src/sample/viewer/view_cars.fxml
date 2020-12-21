@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -27,5 +28,6 @@
                 <TableColumn fx:id="year_made" prefWidth="106.0" style="-fx-alignment: CENTER;" text="Year Made" />
             </columns>
         </TableView>
+      <Button fx:id="back_to_main_menu_button" layoutX="14.0" layoutY="24.0" mnemonicParsing="false" onAction="#back_to_main_menu" text="Back to Main Menu" />
     </children>
 </AnchorPane>
