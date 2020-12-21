@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.viewer.Car_details">
+   <children>
+      <ImageView fx:id="car_image" fitHeight="168.0" fitWidth="293.0" layoutX="304.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="25.0" layoutY="267.0" text="Car Registration:-" />
+      <TextField fx:id="car_reg_number" editable="false" layoutX="130.0" layoutY="263.0" prefHeight="25.0" prefWidth="221.0" />
+      <Label layoutX="57.0" layoutY="322.0" text="Car Make:-" />
+      <TextField fx:id="car_make" editable="false" layoutX="130.0" layoutY="318.0" prefHeight="25.0" prefWidth="221.0" />
+      <Label layoutX="55.0" layoutY="372.0" text="Car Model:-" />
+      <TextField fx:id="car_model" editable="false" layoutX="130.0" layoutY="368.0" prefHeight="25.0" prefWidth="221.0" />
+      <Label layoutX="60.0" layoutY="425.0" text="Colour 1:-" />
+      <TextField fx:id="car_colour_1" editable="false" layoutX="130.0" layoutY="421.0" prefHeight="25.0" prefWidth="221.0" />
+      <Label layoutX="60.0" layoutY="477.0" text="Colour 2:-" />
+      <TextField fx:id="car_colour_2" editable="false" layoutX="130.0" layoutY="473.0" prefHeight="25.0" prefWidth="221.0" />
+      <Label layoutX="387.0" layoutY="195.0" text="Car Details" textFill="RED">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="514.0" layoutY="267.0" text="Colour 3:-" />
+      <TextField fx:id="car_colour_3" editable="false" layoutX="588.0" layoutY="263.0" prefHeight="25.0" prefWidth="221.0" />
+      <Label layoutX="512.0" layoutY="331.0" text="Car Price:-" />
+      <TextField fx:id="car_price" editable="false" layoutX="588.0" layoutY="327.0" prefHeight="25.0" prefWidth="221.0" />
+      <Label layoutX="479.0" layoutY="385.0" text="Car YearMadae:-" />
+      <TextField fx:id="car_year_made" editable="false" layoutX="588.0" layoutY="381.0" prefHeight="25.0" prefWidth="221.0" />
+      <Label layoutX="493.0" layoutY="447.0" text="Car Quantity:-" />
+      <TextField fx:id="car_quantity" editable="false" layoutX="588.0" layoutY="443.0" prefHeight="25.0" prefWidth="221.0" />
+   </children>
+</AnchorPane>

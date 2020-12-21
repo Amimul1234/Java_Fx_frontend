@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sample.viewer.SearchByReg"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="627.0" prefWidth="1114.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.viewer.SearchByRegController">
+   <children>
+      <ImageView fitHeight="627.0" fitWidth="1114.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="file:/H:/Java%20Codes/javafx_practices/static_resources/login_background.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="634.0" layoutY="250.0" text="Enter Registration Number to Find Car">
+         <font>
+            <Font name="Segoe UI Bold" size="21.0" />
+         </font>
+      </Label>
+      <TextField fx:id="registration_number" layoutX="634.0" layoutY="301.0" prefHeight="35.0" prefWidth="380.0" promptText="Please Enter Registration Number" />
+      <Button layoutX="725.0" layoutY="362.0" mnemonicParsing="false" onAction="#search_car_by_reg" prefHeight="39.0" prefWidth="199.0" style="-fx-background-color: #003EFF;" text="Search Car" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="38.0" layoutY="40.0" mnemonicParsing="false" onAction="#back_to_main_menu" text="Back To Main Menu" textFill="#000dff">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Button>
+   </children>
 </AnchorPane>

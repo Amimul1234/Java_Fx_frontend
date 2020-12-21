@@ -2,24 +2,20 @@ package sample.viewer;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import sample.datas.CarTableData;
-import sample.login.Main;
 import sample.manufacturer.ModifiedCar;
 import sharedClasses.Car_shared;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewCarController {
+public class CarDetailsListForSearch{
 
-    private List<Car_shared> carSharedList = new ArrayList<>();
+    private List<Car_shared> carSharedList;
     private ObservableList<ModifiedCar> data;
 
     @FXML
@@ -75,51 +71,37 @@ public class ViewCarController {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    carSharedList = (List<Car_shared>) Main.connector.getObjectInputStream().readObject();
+                List<ModifiedCar> modifiedCarList = new ArrayList<>();
 
-                    List<ModifiedCar> modifiedCarList = new ArrayList<>();
-
-                    for(Car_shared car_shared : carSharedList)
-                    {
-                        modifiedCarList.add(new ModifiedCar(car_shared.getQuantity(), car_shared.getCarReg(), car_shared.getYearMade(),
-                                car_shared.getColour1(), car_shared.getColour2(), car_shared.getColour3(), car_shared.getCarMake(),
-                                car_shared.getCarModel(), car_shared.getPrice(), car_shared.getCarImage()));
-                    }
-
-                    data = FXCollections.observableList(modifiedCarList );
-
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            table_of_cars.setItems(data);
-                            table_of_cars.refresh();
-                        }
-                    });
-
-                } catch (IOException | ClassNotFoundException e) {
-                    e.printStackTrace();
+                for(Car_shared car_shared : carSharedList)
+                {
+                    modifiedCarList.add(new ModifiedCar(car_shared.getQuantity(), car_shared.getCarReg(), car_shared.getYearMade(),
+                            car_shared.getColour1(), car_shared.getColour2(), car_shared.getColour3(), car_shared.getCarMake(),
+                            car_shared.getCarModel(), car_shared.getPrice(), car_shared.getCarImage()));
                 }
+
+                data = FXCollections.observableList(modifiedCarList );
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        table_of_cars.setItems(data);
+                        table_of_cars.refresh();
+                    }
+                });
             }
         }).start();
 
-        CarTableData carTableData = CarTableData.getInstance();
-
-        carTableData.getData().addListener(new ListChangeListener<ModifiedCar>() {
-            @Override
-            public void onChanged(Change<? extends ModifiedCar> change) {
-                data.clear();
-                data.addAll(carTableData.getData());
-                table_of_cars.refresh();
-            }
-        });
-
     }
 
-    public void initialize()
+    public void init()
     {
         initializeColumns();
         populateTable();
     }
 
+    public void setCars(List<Car_shared> car_sharedList) {
+        this.carSharedList = car_sharedList;
+        init();
+    }
 }
